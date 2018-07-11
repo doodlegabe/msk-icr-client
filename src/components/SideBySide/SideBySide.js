@@ -6,12 +6,12 @@ import {Intro, UploadForm} from '../index';
 export default class SideBySide extends Component {
   render() {
     return (
-      <Grid container={true} stretched={true} mobile={16} tablet={8} computer={4}>
-        <Grid.Row>
-          <Grid.Column>
+      <Grid padded>
+        <Grid.Row stretched>
+          <Grid.Column width={6}>
            <Intro/>
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column width={10}>
             <UploadForm/>
           </Grid.Column>
         </Grid.Row>

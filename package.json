@@ -2,7 +2,7 @@
   "name": "semantic-ui-react-example-webpack3",
   "license": "MIT",
   "version": "1.0.0",
-  "description": "Get started with Semantic UI React and Webpack 3",
+  "description": "Moleskine ICR Client",
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

@@ -12,7 +12,7 @@ export default class MainNav extends Component {
     const { activeItem } = this.state;
 
     return (
-      <Menu text>
+      <Menu>
         <Menu.Item header> MSK ICR Prototype Client</Menu.Item>
         <Menu.Item
           name='Documentation'
