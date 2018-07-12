@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - "node"
+  - "8"
+env:
+  -NODE_ENV=travis
+  -API_HOST=http://www.travis.com/

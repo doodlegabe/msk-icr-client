@@ -1,7 +1,8 @@
-const fs = require('fs')
-const path = require('path')
+const fs = require('fs');
+const path = require('path');
 
-const NODE_ENV = process.env.NODE_ENV
+const NODE_ENV = process.env.NODE_ENV;
+
 
 if (!NODE_ENV) {
   throw new Error('The NODE_ENV environment variable is required but was not specified.')
@@ -16,7 +17,7 @@ if (!NODE_ENV) {
 // Otherwise, we risk importing Node.js core modules into an app instead of Webpack shims.
 // https://github.com/facebookincubator/create-react-app/issues/1023#issuecomment-265344421
 // We also resolve them to make sure all tools using them work consistently.
-const appDirectory = fs.realpathSync(process.cwd())
+const appDirectory = fs.realpathSync(process.cwd());
 process.env.NODE_PATH = (process.env.NODE_PATH || '')
   .split(path.delimiter)
   .filter(folder => folder && !path.isAbsolute(folder))
@@ -27,6 +28,7 @@ function getClientEnvironment(publicUrl) {
   const raw = Object.keys(process.env)
     .reduce(
       (env, key) => {
+        console.log(process.env[key]);
         env[key] = process.env[key] // eslint-disable-line no-param-reassign
         return env
       },
@@ -39,15 +41,16 @@ function getClientEnvironment(publicUrl) {
         // This should only be used as an escape hatch. Normally you would put
         // images into the `src` and `import` them in code to get their paths.
         PUBLIC_URL: publicUrl,
+        API_PATH: process.env.API_PATH
       }
-    )
+    );
   // Stringify all values so we can feed into Webpack DefinePlugin
   const stringified = {
     'process.env': Object.keys(raw).reduce((env, key) => {
       env[key] = JSON.stringify(raw[key]) // eslint-disable-line no-param-reassign
       return env
     }, {}),
-  }
+  };
 
   return { raw, stringified }
 }
