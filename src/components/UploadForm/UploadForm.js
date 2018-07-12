@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Segment, Form, Button} from 'semantic-ui-react';
+import {Segment, Container, Form, Button, Image, TextArea} from 'semantic-ui-react';
 import ajax from 'superagent';
 
 export default class UploadForm extends Component {
@@ -11,14 +11,29 @@ export default class UploadForm extends Component {
       providerGoogle: false,
       providerMicrosoft: false,
       imageFile: null,
+      imageFileName: '',
       providers:[],
-      isLoading: false
+      isLoading: false,
+      responseReceived: false,
+      responseObj: {}
     };
     this.setFile = this.setFile.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCheck = this.handleCheck.bind(this);
     this.createProviderList = this.createProviderList.bind(this);
+    this.handleReset = this.handleReset.bind(this);
+  }
+
+  handleReset(){
+    this.setState({
+      imageFile: null,
+      imageFileName: '',
+      providers:[],
+      isLoading: false,
+      responseReceived: false,
+      responseObj: {}
+    });
   }
 
   createProviderList(){
@@ -55,7 +70,9 @@ export default class UploadForm extends Component {
       .end((error, response) => {
         console.log(response);
         this.setState({
-          isLoading: false
+          isLoading: false,
+          responseObj: response.body,
+          responseReceived: true
         });
       });
 
@@ -72,7 +89,8 @@ export default class UploadForm extends Component {
   setFile(event) {
     const value = event.target.files[0];
     this.setState({
-      imageFile: value
+      imageFile: value,
+      imageFileName: value.name
     });
     event.preventDefault();
   }
@@ -86,6 +104,8 @@ export default class UploadForm extends Component {
     };
     return (
       <Segment>
+        { this.state.responseReceived ? null :
+        <Container>
           <Form loading={this.state.isLoading}>
             <Form.Group inline>
               <label>Select an ICR Provider</label>
@@ -129,11 +149,20 @@ export default class UploadForm extends Component {
             </label>
             </Form.Field>
             <Button basic onClick={this.fileBrowser}>
-              Select an image file
+              {this.state.imageFileName ? this.state.imageFileName : <span>Select an image file</span>}
             </Button>
             </Form.Group>
             <Button primary onClick={this.handleSubmit}>Submit</Button>
           </Form>
+        </Container> }
+        { this.state.responseReceived ?
+          <Container style={{ textAlign:'center' }}>
+            <Image src={this.state.responseObj.imageURI}  size='medium' bordered style={{ minWidth:600, marginLeft:'auto', marginRight:'auto' }}/>
+            <h3>Transcription Results</h3>
+            <TextArea autoHeight placeholder={JSON.stringify(this.state.responseObj.transcriptions, undefined, 4)} style={{ minHeight: 300, minWidth:600 }}/>
+            <Button positive onClick={this.handleReset}>Transcribe Another Image</Button>
+          </Container>
+        : null }
       </Segment>
     )
   }
@@ -143,5 +172,10 @@ UploadForm.propTypes = {
   providerABBYY: PropTypes.boolean,
   providerGoogle: PropTypes.boolean,
   providerMicrosoft: PropTypes.boolean,
-  imageFile: PropTypes.object
+  imageFile: PropTypes.object,
+  imageFileName: PropTypes.string,
+  providers: PropTypes.array,
+  isLoading: PropTypes.boolean,
+  responseReceived: PropTypes.boolean,
+  responseObj: PropTypes.object
 };
