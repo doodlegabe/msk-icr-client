@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import {Segment, Header} from 'semantic-ui-react';
 
@@ -7,13 +6,11 @@ export default class Intro extends Component {
   };
 
   render() {
-
-
     return (
       <Segment>
         <Header>Image Transcription</Header>
         <p>
-          The cans could be said to resemble lacking sharons. Authors often misinterpret the buzzard as a cogent jewel, when in actuality it feels more like a lonesome swiss. Few can name a paltry tea that isn't a centred watchmaker. Unfortunately, that is wrong; on the contrary, a manager can hardly be considered a brittle truck without also being a quit.
+          Select an ICR provider and an image to begin transcription. See  <a href={process.env.API_HOST + '/index.html'}> documentation</a> for more information.
         </p>
       </Segment>
     )

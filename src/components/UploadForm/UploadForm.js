@@ -169,13 +169,13 @@ export default class UploadForm extends Component {
 };
 
 UploadForm.propTypes = {
-  providerABBYY: PropTypes.boolean,
-  providerGoogle: PropTypes.boolean,
-  providerMicrosoft: PropTypes.boolean,
-  imageFile: PropTypes.object,
+  providerABBYY: PropTypes.bool,
+  providerGoogle: PropTypes.bool,
+  providerMicrosoft: PropTypes.bool,
+  imageFile: PropTypes.shape(),
   imageFileName: PropTypes.string,
   providers: PropTypes.array,
-  isLoading: PropTypes.boolean,
-  responseReceived: PropTypes.boolean,
+  isLoading: PropTypes.bool,
+  responseReceived: PropTypes.bool,
   responseObj: PropTypes.object
 };
